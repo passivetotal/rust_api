@@ -1,0 +1,8 @@
+[package]
+name = "passivetotal"
+version = "0.1.0"
+authors = ["Johan Nestaas <johannestaas@gmail.com>"]
+
+[dependencies]
+hyper = { git = "https://github.com/hyperium/hyper.git" }
+rustc-serialize="*"
