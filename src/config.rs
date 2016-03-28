@@ -24,7 +24,7 @@ pub fn read_config() -> Config {
         _ => panic!("Could not read config file"),
     };
     let mut contents = String::new();
-    file.read_to_string(&mut contents);
+    file.read_to_string(&mut contents).unwrap();
     match json::decode(contents.as_str()) {
         Ok(conf) => conf,
         _ => panic!("Could not read config file"),
