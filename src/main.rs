@@ -1,16 +1,12 @@
-extern crate hyper;
-extern crate rustc_serialize;
-use hyper::header::Basic;
+extern crate passivetotal;
 
-mod lib;
-mod config;
+use passivetotal::config;
+use passivetotal::PTClient;
 
 fn main() {
     let conf = config::read_config();
+    let client = PTClient::from(conf);
     let path = String::from("/dns/passive?query=passivetotal.org");
-    let username = conf.username;
-    let password = Some(conf.api_key);
-    let auth = Basic { username: username, password: password };
-    let body = lib::pt_get(auth, path);
+    let body = client.get(path);
     println!("{}", body);
 }
