@@ -55,7 +55,7 @@ See main.rs for examples of usage::
     let client = PTClient::from(conf);
 
     let response = client.get_pdns("passivetotal.org");
-    for result in response.results {
+    for result in response.results.unwrap() {
         println!("{}", result.resolve.unwrap());
     }
 
