@@ -39,7 +39,7 @@ fn main() {
         let response = client.get_pdns(args.arg_query.as_str());
         println!("PDNS results for {}:", args.arg_query);
         for result in response.results {
-            if args.flag_source == "none" || result.source.contains(&args.flag_source) {
+            if args.flag_source == "none" || result.source.unwrap().contains(&args.flag_source) {
                 println!("{}: {}", result.lastSeen.unwrap(), result.resolve.unwrap());
             }
         }

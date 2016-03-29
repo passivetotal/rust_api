@@ -26,7 +26,7 @@ pub struct PDNSResult {
     pub recordHash: Option<String>,
     pub resolve: Option<String>,
     pub value: Option<String>,
-    pub source: Vec<String>,
+    pub source: Option<Vec<String>>,
     pub lastSeen: Option<String>,
     pub firstSeen: Option<String>,
     pub collected: Option<String>,
@@ -35,11 +35,11 @@ pub struct PDNSResult {
 #[derive(RustcDecodable, Debug)]
 pub struct PDNSResponse {
     pub totalRecords: u32,
-    pub queryValue: String,
-    pub queryType: String,
-    pub firstSeen: String,
-    pub lastSeen: String,
-    pub results: Vec<PDNSResult>,
+    pub queryValue: Option<String>,
+    pub queryType: Option<String>,
+    pub firstSeen: Option<String>,
+    pub lastSeen: Option<String>,
+    pub results: Option<Vec<PDNSResult>>,
     pub pager: Option<Pager>,
 }
 
