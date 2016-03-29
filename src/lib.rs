@@ -1,4 +1,5 @@
 pub mod config;
+pub mod constants;
 
 extern crate rustc_serialize;
 extern crate hyper;
@@ -15,24 +16,24 @@ pub struct PTClient {
 
 #[derive(RustcDecodable, Debug)]
 pub struct PDNSResult {
-    recordHash: String,
-    resolve: String,
-    value: Option<String>,
-    source: Vec<String>,
-    lastSeen: Option<String>,
-    firstSeen: Option<String>,
-    collected: Option<String>,
+    pub recordHash: Option<String>,
+    pub resolve: Option<String>,
+    pub value: Option<String>,
+    pub source: Vec<String>,
+    pub lastSeen: Option<String>,
+    pub firstSeen: Option<String>,
+    pub collected: Option<String>,
 }
 
 #[derive(RustcDecodable, Debug)]
 pub struct PDNSResponse {
-    totalRecords: u32,
-    queryValue: String,
-    queryType: String,
-    firstSeen: String,
-    lastSeen: String,
-    pager: Option<String>,
-    results: Vec<PDNSResult>,
+    pub totalRecords: u32,
+    pub queryValue: String,
+    pub queryType: String,
+    pub firstSeen: String,
+    pub lastSeen: String,
+    pub pager: Option<String>,
+    pub results: Vec<PDNSResult>,
 }
 
 impl PTClient {
@@ -72,6 +73,7 @@ impl PTClient {
         url.set_query_from_pairs(&[("query", query)]);
         let body = self.get_response_body(&url);
         let decoded = json::decode(body.as_str());
+        // Fail if JSON looks bad
         decoded.unwrap()
     }
 }
