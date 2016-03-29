@@ -6,10 +6,33 @@ extern crate hyper;
 use std::io::Read;
 use hyper::{Client, Url};
 use hyper::header::{Authorization, Basic};
+use rustc_serialize::json;
 
 pub struct PTClient {
     pub client: Client,
     pub auth: Basic,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct PDNSResult {
+    recordHash: String,
+    resolve: String,
+    value: Option<String>,
+    source: Vec<String>,
+    lastSeen: Option<String>,
+    firstSeen: Option<String>,
+    collected: Option<String>,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct PDNSResponse {
+    totalRecords: u32,
+    queryValue: String,
+    queryType: String,
+    firstSeen: String,
+    lastSeen: String,
+    pager: Option<String>,
+    results: Vec<PDNSResult>,
 }
 
 impl PTClient {
@@ -43,10 +66,12 @@ impl PTClient {
         url
     }
 
-    pub fn get_pdns(&self, query: &str) -> String {
+    pub fn get_pdns(&self, query: &str) -> PDNSResponse {
         // Returns the String body of a pdns query
         let mut url = self.make_url("/dns/passive");
         url.set_query_from_pairs(&[("query", query)]);
-        self.get_response_body(&url)
+        let body = self.get_response_body(&url);
+        let decoded = json::decode(body.as_str());
+        decoded.unwrap()
     }
 }
