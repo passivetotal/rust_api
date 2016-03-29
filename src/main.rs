@@ -6,20 +6,22 @@ use docopt::Docopt;
 
 use passivetotal::config;
 use passivetotal::PTClient;
-use passivetotal::constants::Source;
+// use passivetotal::constants::Source;
 
 static USAGE: &'static str = "
-Usage: passivetotal pdns <query>
+Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal --help
        
-       Option:
-            -h, --help      Show this error message
+       Options:
+            -h, --help          Show this error message
+            --source=<source>   Source to filter [default:none]
 ";
 
 #[derive(Debug, RustcDecodable)]
 struct Args {
     cmd_pdns: bool,
     arg_query: String,
+    flag_source: String,
 }
 
 fn main() {
@@ -31,9 +33,9 @@ fn main() {
 
     if args.cmd_pdns {
         let response = client.get_pdns(args.arg_query.as_str());
-        println!("PDNS results for passivetotal.org from RiskIQ:");
+        println!("PDNS results for {}:", args.arg_query);
         for result in response.results {
-            if result.source.contains(&Source::RISKIQ.string()) {
+            if args.flag_source == "none" || result.source.contains(&args.flag_source) {
                 println!("{}: {}", result.lastSeen.unwrap(), result.resolve.unwrap());
             }
         }
