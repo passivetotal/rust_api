@@ -6,3 +6,4 @@ authors = ["Johan Nestaas <johannestaas@gmail.com>"]
 [dependencies]
 hyper = { git = "https://github.com/hyperium/hyper.git" }
 rustc-serialize="*"
+docopt="*"
