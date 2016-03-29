@@ -39,5 +39,11 @@ fn main() {
                 println!("{}: {}", result.lastSeen.unwrap(), result.resolve.unwrap());
             }
         }
+        match response.pager {
+            Some(pager) => {
+                println!("previous/next/page_size: {}/{}/{}", pager.previous.unwrap(), pager.next.unwrap(), pager.page_size.unwrap());
+            },
+            _ => { println!("End of Results"); },
+        };
     }
 }

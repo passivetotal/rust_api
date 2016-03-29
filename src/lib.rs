@@ -15,6 +15,13 @@ pub struct PTClient {
 }
 
 #[derive(RustcDecodable, Debug)]
+pub struct Pager {
+    pub next: Option<String>,
+    pub previous: Option<String>,
+    pub page_size: Option<u32>,
+}
+
+#[derive(RustcDecodable, Debug)]
 pub struct PDNSResult {
     pub recordHash: Option<String>,
     pub resolve: Option<String>,
@@ -32,8 +39,8 @@ pub struct PDNSResponse {
     pub queryType: String,
     pub firstSeen: String,
     pub lastSeen: String,
-    pub pager: Option<String>,
     pub results: Vec<PDNSResult>,
+    pub pager: Option<Pager>,
 }
 
 impl PTClient {
