@@ -1,3 +1,6 @@
+#![allow(non_snake_case)]
+// Disable warnings that JSON struct fields are camelCase.
+// This is just to reflect the true field names of the JSON document.
 pub mod config;
 pub mod constants;
 
