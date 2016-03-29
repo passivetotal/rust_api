@@ -87,6 +87,16 @@ pub struct SSLCertResults {
     pub lastSeen: Option<String>,
 }
 
+macro_rules! define_get_decoder {
+    ($name: ident, $path: expr, $elem_ty: ty) => {
+        pub fn $name(&self, query: &str) -> $elem_ty {
+            let mut url = self.make_url($path);
+            url.set_query_from_pairs(&[("query", query)]);
+            let body = self.get_response_body(&url);
+            json::decode(body.as_str()).unwrap()
+        }
+    }
+}
 
 impl PTClient {
 
@@ -119,25 +129,7 @@ impl PTClient {
         url
     }
 
-	pub fn get_query(&self, path: &str, query: &str) -> String {
-        // Returns the String body of a pdns query
-        let mut url = self.make_url(path);
-        url.set_query_from_pairs(&[("query", query)]);
-        self.get_response_body(&url)
-	}
-
-    pub fn get_pdns(&self, query: &str) -> PDNSResponse {
-        let body = self.get_query("/dns/passive", query);
-        json::decode(body.as_str()).unwrap()
-    }
-
-    pub fn get_whois(&self, query: &str) -> WhoisResponse {
-        let body = self.get_query("/whois", query);
-        json::decode(body.as_str()).unwrap()
-    }
-
-    pub fn get_sslcert(&self, query: &str) -> SSLCertResponse {
-        let body = self.get_query("/ssl-certificate/history", query);
-        json::decode(body.as_str()).unwrap()
-    }
+    define_get_decoder!(get_pdns, "/dns/passive", PDNSResponse);
+    define_get_decoder!(get_whois, "/whois", WhoisResponse);
+    define_get_decoder!(get_sslcert, "/ssl-certificate/history", SSLCertResponse);
 }
