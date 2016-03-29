@@ -10,6 +10,7 @@ use passivetotal::PTClient;
 
 static USAGE: &'static str = "
 Usage: passivetotal pdns <query> [--source=<source>]
+       passivetotal whois <query>
        passivetotal --help
        
        Options:
@@ -20,6 +21,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
 #[derive(Debug, RustcDecodable)]
 struct Args {
     cmd_pdns: bool,
+    cmd_whois: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -45,5 +47,14 @@ fn main() {
             },
             _ => { println!("End of Results"); },
         };
+    } else if args.cmd_whois {
+        let response = client.get_whois(args.arg_query.as_str());
+        println!("Whois results for {}:", args.arg_query);
+        println!("email: {}", response.contactEmail.unwrap());
+        println!("domain: {}", response.domain.unwrap());
+        println!("name servers:");
+        for ns in response.nameServers.unwrap() {
+            println!("{}", ns);
+        }
     }
 }

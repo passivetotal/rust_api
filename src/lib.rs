@@ -43,6 +43,38 @@ pub struct PDNSResponse {
     pub pager: Option<Pager>,
 }
 
+#[derive(RustcDecodable, Debug)]
+pub struct WhoisResponse {
+    pub contactEmail: Option<String>,
+    pub domain: Option<String>,
+    pub billing: Option<Registrant>,
+    pub zone: Option<Registrant>,
+    pub nameServers: Option<Vec<String>>,
+    pub registered: Option<String>,
+    pub lastLoadedAt: Option<String>,
+    pub whoisServer: Option<String>,
+    pub registryUpdatedAt: Option<String>,
+    pub admin: Option<Registrant>,
+    pub expiresAt: Option<String>,
+    pub registrar: Option<String>,
+    pub tech: Option<Registrant>,
+    pub registrant: Option<Registrant>,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct Registrant {
+    pub city: Option<String>,
+    pub name: Option<String>,
+    pub country: Option<String>,
+    pub telephone: Option<String>,
+    pub state: Option<String>,
+    pub street: Option<String>,
+    pub postalCode: Option<String>,
+    pub organization: Option<String>,
+    pub email: Option<String>,
+}
+
+
 impl PTClient {
 
     pub fn from(conf: config::Config) -> PTClient {
@@ -80,7 +112,14 @@ impl PTClient {
         url.set_query_from_pairs(&[("query", query)]);
         let body = self.get_response_body(&url);
         let decoded = json::decode(body.as_str());
-        // Fail if JSON looks bad
+        decoded.unwrap()
+    }
+
+    pub fn get_whois(&self, query: &str) -> WhoisResponse {
+        let mut url = self.make_url("/whois");
+        url.set_query_from_pairs(&[("query", query)]);
+        let body = self.get_response_body(&url);
+        let decoded = json::decode(body.as_str());
         decoded.unwrap()
     }
 }
