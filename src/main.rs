@@ -6,7 +6,6 @@ use passivetotal::PTClient;
 fn main() {
     let conf = config::read_config();
     let client = PTClient::from(conf);
-    let path = String::from("/dns/passive?query=passivetotal.org");
-    let body = client.get(path);
+    let body = client.get_pdns("passivetotal.org");
     println!("{}", body);
 }
