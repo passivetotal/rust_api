@@ -74,6 +74,19 @@ pub struct Registrant {
     pub email: Option<String>,
 }
 
+#[derive(RustcDecodable, Debug)]
+pub struct SSLCertResponse {
+    pub results: Option<Vec<SSLCertResults>>,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct SSLCertResults {
+    pub sha1: Option<String>,
+    pub ipAddresses: Option<Vec<String>>,
+    pub firstSeen: Option<String>,
+    pub lastSeen: Option<String>,
+}
+
 
 impl PTClient {
 
@@ -106,20 +119,25 @@ impl PTClient {
         url
     }
 
-    pub fn get_pdns(&self, query: &str) -> PDNSResponse {
+	pub fn get_query(&self, path: &str, query: &str) -> String {
         // Returns the String body of a pdns query
-        let mut url = self.make_url("/dns/passive");
+        let mut url = self.make_url(path);
         url.set_query_from_pairs(&[("query", query)]);
-        let body = self.get_response_body(&url);
-        let decoded = json::decode(body.as_str());
-        decoded.unwrap()
+        self.get_response_body(&url)
+	}
+
+    pub fn get_pdns(&self, query: &str) -> PDNSResponse {
+        let body = self.get_query("/dns/passive", query);
+        json::decode(body.as_str()).unwrap()
     }
 
     pub fn get_whois(&self, query: &str) -> WhoisResponse {
-        let mut url = self.make_url("/whois");
-        url.set_query_from_pairs(&[("query", query)]);
-        let body = self.get_response_body(&url);
-        let decoded = json::decode(body.as_str());
-        decoded.unwrap()
+        let body = self.get_query("/whois", query);
+        json::decode(body.as_str()).unwrap()
+    }
+
+    pub fn get_sslcert(&self, query: &str) -> SSLCertResponse {
+        let body = self.get_query("/ssl-certificate/history", query);
+        json::decode(body.as_str()).unwrap()
     }
 }

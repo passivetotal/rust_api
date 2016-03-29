@@ -11,6 +11,7 @@ use passivetotal::PTClient;
 static USAGE: &'static str = "
 Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal whois <query>
+       passivetotal ssl <query>
        passivetotal --help
        
        Options:
@@ -22,6 +23,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
 struct Args {
     cmd_pdns: bool,
     cmd_whois: bool,
+    cmd_ssl: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -55,6 +57,16 @@ fn main() {
         println!("name servers:");
         for ns in response.nameServers.unwrap() {
             println!("{}", ns);
+        }
+    } else if args.cmd_ssl {
+        let response = client.get_sslcert(args.arg_query.as_str());
+        println!("SSL Certificate history for {}:", args.arg_query);
+        for result in response.results.unwrap() {
+            println!("SHA1: {}", result.sha1.unwrap());
+            println!("First Seen: {}", result.firstSeen.unwrap());
+            for ip in result.ipAddresses.unwrap() {
+                println!("  IPv4: {}", ip);
+            }
         }
     }
 }
