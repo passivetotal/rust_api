@@ -14,8 +14,11 @@ use hyper::header::{Authorization, Basic};
 use rustc_serialize::json;
 use response::*;
 
+// This is the client exposed to the user for abstracting the passivetotal API
 pub struct PTClient {
+    // the hyper::Client
     pub client: Client,
+    // stores the http basic auth credentials
     pub auth: Basic,
 }
 
@@ -46,7 +49,7 @@ impl PTClient {
         }
     }
 
-    pub fn get_response_body(&self, url: &Url) -> String {
+    fn get_response_body(&self, url: &Url) -> String {
         // Takes a hyper::Url and returns the text body
         let mut res = self.client.get(url.serialize().as_str()).header(Authorization(self.auth.clone())).send().unwrap();
         let mut body = String::new();
@@ -69,7 +72,7 @@ impl PTClient {
     // instance of the response type.
     // I used a macro because generics don't seem to work with json::decode with a generic return
     // type.
-    // The definition will be get_pdns(&self, query: &str) -> PDNSResponse
+    // The definition will be: pub fn get_pdns(&self, query: &str) -> PDNSResponse
     define_get_decoder!(get_pdns, "/dns/passive", PDNSResponse);
     define_get_decoder!(get_whois, "/whois", WhoisResponse);
     define_get_decoder!(get_sslcert, "/ssl-certificate/history", SSLCertResponse);
