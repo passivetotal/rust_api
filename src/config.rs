@@ -11,18 +11,8 @@ pub enum ConfigError {
     Path(String),
 }
 
-
-impl From<io::Error> for ConfigError {
-    fn from(err: io::Error) -> ConfigError {
-        ConfigError::Io(err)
-    }
-}
-
-impl From<json::DecoderError> for ConfigError {
-    fn from(err: json::DecoderError) -> ConfigError {
-        ConfigError::Json(err)
-    }
-}
+map_to_error!(ConfigError, io::Error, ConfigError::Io);
+map_to_error!(ConfigError, json::DecoderError, ConfigError::Json);
 
 #[derive(RustcDecodable, RustcEncodable)]
 pub struct Config {

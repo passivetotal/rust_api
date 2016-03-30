@@ -5,7 +5,7 @@ extern crate passivetotal;
 use docopt::Docopt;
 
 use passivetotal::config;
-use passivetotal::PTClient;
+use passivetotal::client::PTClient;
 // use passivetotal::constants::Source;
 
 static USAGE: &'static str = "
