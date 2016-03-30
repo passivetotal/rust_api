@@ -59,13 +59,11 @@ impl PTClient {
 
     fn make_url(&self, path: &str) -> hyper::Url {
         // Takes the passivetotal url path and builds a hyper::Url
-        let mut url_str = String::from("https://api.passivetotal.org/v2");
-        url_str.push_str(path);
-        let url = match Url::parse(url_str.as_str()) {
+        let url_str = format!("https://api.passivetotal.org/v2{}", path);
+        match Url::parse(url_str.as_str()) {
             Ok(u) => u,
-            _ => panic!("Failed to build url from {}", path),
-        };
-        url
+            Err(e) => panic!("Failed to build url from {}: {}", path, e),
+        }
     }
 
     // These macros define functions named get_pdns, get_whois, get_sslcert which will return an
@@ -76,4 +74,14 @@ impl PTClient {
     define_get_decoder!(get_pdns, "/dns/passive", PDNSResponse);
     define_get_decoder!(get_whois, "/whois", WhoisResponse);
     define_get_decoder!(get_sslcert, "/ssl-certificate/history", SSLCertResponse);
+}
+
+#[test]
+fn it_works() {
+    let conf = config::read_config();
+    let client = PTClient::from(conf);
+    let response = client.get_pdns("sf.riskiq.net");
+    let results = response.results.unwrap();
+    assert_eq!(results.len(), 2);
+    assert_eq!(results[0].resolve, Some("192.65.247.107".to_string()));
 }
