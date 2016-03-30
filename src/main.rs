@@ -32,7 +32,7 @@ fn main() {
     let args: Args = Docopt::new(USAGE)
         .and_then(|d| d.decode())
         .unwrap_or_else(|err| err.exit());
-    let conf = config::read_config();
+    let conf = config::read_config().unwrap();
     let client = PTClient::from(conf);
 
     if args.cmd_pdns {
