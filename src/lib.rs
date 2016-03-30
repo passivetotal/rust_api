@@ -77,7 +77,7 @@ impl PTClient {
 }
 
 #[test]
-fn it_works() {
+fn test_pdns_riskiq() {
     let conf = config::read_config();
     let client = PTClient::from(conf);
     let response = client.get_pdns("sf.riskiq.net");
