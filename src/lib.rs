@@ -3,6 +3,7 @@
 // This is just to reflect the true field names of the JSON document.
 pub mod config;
 pub mod constants;
+pub mod response;
 
 extern crate rustc_serialize;
 extern crate hyper;
@@ -11,85 +12,17 @@ use std::io::Read;
 use hyper::{Client, Url};
 use hyper::header::{Authorization, Basic};
 use rustc_serialize::json;
+use response::*;
 
 pub struct PTClient {
     pub client: Client,
     pub auth: Basic,
 }
 
-#[derive(RustcDecodable, Debug)]
-pub struct Pager {
-    pub next: Option<String>,
-    pub previous: Option<String>,
-    pub page_size: Option<u32>,
-}
-
-#[derive(RustcDecodable, Debug)]
-pub struct PDNSResult {
-    pub recordHash: Option<String>,
-    pub resolve: Option<String>,
-    pub value: Option<String>,
-    pub source: Option<Vec<String>>,
-    pub lastSeen: Option<String>,
-    pub firstSeen: Option<String>,
-    pub collected: Option<String>,
-}
-
-#[derive(RustcDecodable, Debug)]
-pub struct PDNSResponse {
-    pub totalRecords: u32,
-    pub queryValue: Option<String>,
-    pub queryType: Option<String>,
-    pub firstSeen: Option<String>,
-    pub lastSeen: Option<String>,
-    pub results: Option<Vec<PDNSResult>>,
-    pub pager: Option<Pager>,
-}
-
-#[derive(RustcDecodable, Debug)]
-pub struct WhoisResponse {
-    pub contactEmail: Option<String>,
-    pub domain: Option<String>,
-    pub billing: Option<Registrant>,
-    pub zone: Option<Registrant>,
-    pub nameServers: Option<Vec<String>>,
-    pub registered: Option<String>,
-    pub lastLoadedAt: Option<String>,
-    pub whoisServer: Option<String>,
-    pub registryUpdatedAt: Option<String>,
-    pub admin: Option<Registrant>,
-    pub expiresAt: Option<String>,
-    pub registrar: Option<String>,
-    pub tech: Option<Registrant>,
-    pub registrant: Option<Registrant>,
-}
-
-#[derive(RustcDecodable, Debug)]
-pub struct Registrant {
-    pub city: Option<String>,
-    pub name: Option<String>,
-    pub country: Option<String>,
-    pub telephone: Option<String>,
-    pub state: Option<String>,
-    pub street: Option<String>,
-    pub postalCode: Option<String>,
-    pub organization: Option<String>,
-    pub email: Option<String>,
-}
-
-#[derive(RustcDecodable, Debug)]
-pub struct SSLCertResponse {
-    pub results: Option<Vec<SSLCertResults>>,
-}
-
-#[derive(RustcDecodable, Debug)]
-pub struct SSLCertResults {
-    pub sha1: Option<String>,
-    pub ipAddresses: Option<Vec<String>>,
-    pub firstSeen: Option<String>,
-    pub lastSeen: Option<String>,
-}
-
+// This macro allows me to define functions that perform a GET on the endpoint specified, and
+// return an instance of the type passed into the macro.
+// json::decode doesn't like decoding with a function response of a generic type, so a macro seemed
+// like the best option to abstract this.
 macro_rules! define_get_decoder {
     ($name: ident, $path: expr, $elem_ty: ty) => {
         pub fn $name(&self, query: &str) -> $elem_ty {
@@ -132,6 +65,11 @@ impl PTClient {
         url
     }
 
+    // These macros define functions named get_pdns, get_whois, get_sslcert which will return an
+    // instance of the response type.
+    // I used a macro because generics don't seem to work with json::decode with a generic return
+    // type.
+    // The definition will be get_pdns(&self, query: &str) -> PDNSResponse
     define_get_decoder!(get_pdns, "/dns/passive", PDNSResponse);
     define_get_decoder!(get_whois, "/whois", WhoisResponse);
     define_get_decoder!(get_sslcert, "/ssl-certificate/history", SSLCertResponse);
