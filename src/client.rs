@@ -32,7 +32,7 @@ macro_rules! define_get_decoder {
 
 impl PTClient {
 
-    pub fn from(conf: config::Config) -> PTClient {
+    pub fn new(conf: config::Config) -> PTClient {
         // Creates a PTClient from a JSON Config from ~/.config/passivetotal/api_config.json
         let username = conf.username;
         let password = Some(conf.api_key);

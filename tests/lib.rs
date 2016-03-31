@@ -5,7 +5,7 @@ use passivetotal::{client,config};
 #[test]
 fn test_pdns_riskiq() {
     let conf = config::read_config().unwrap();
-    let client = client::PTClient::from(conf);
+    let client = client::PTClient::new(conf);
     let response = client.get_pdns("sf.riskiq.net");
     let results = response.results.unwrap();
     assert_eq!(results.len(), 2);

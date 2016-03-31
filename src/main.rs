@@ -33,7 +33,7 @@ fn main() {
         .and_then(|d| d.decode())
         .unwrap_or_else(|err| err.exit());
     let conf = config::read_config().unwrap();
-    let client = PTClient::from(conf);
+    let client = PTClient::new(conf);
 
     if args.cmd_pdns {
         let response = client.get_pdns(args.arg_query.as_str());
