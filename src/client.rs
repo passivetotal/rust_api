@@ -7,6 +7,7 @@
 
 use std::io::Error as IoError;
 use std::io::Read;
+use hyper::error::Error as HyperError;
 use hyper::{Client, Url};
 use hyper::header::{Authorization, Basic};
 use rustc_serialize::json;
@@ -27,10 +28,12 @@ pub struct PTClient {
 pub enum ResponseError {
     Json(json::DecoderError),
     Http(IoError),
+    Hyper(HyperError),
 }
 
 map_to_error!(ResponseError, json::DecoderError, ResponseError::Json);
 map_to_error!(ResponseError, IoError, ResponseError::Http);
+map_to_error!(ResponseError, HyperError, ResponseError::Hyper);
 
 /// This macro allows me to define functions that perform a GET on the endpoint specified, and
 /// return an instance of the type passed into the macro.
@@ -100,7 +103,7 @@ impl PTClient {
 
     fn get_response_body(&self, url: &Url) -> Result<String, ResponseError> {
         // Takes a hyper::Url and returns the text body
-        let mut res = self.client.get(url.serialize().as_str()).header(Authorization(self.auth.clone())).send().unwrap();
+        let mut res = try!(self.client.get(url.serialize().as_str()).header(Authorization(self.auth.clone())).send());
         let mut body = String::new();
         try!(res.read_to_string(&mut body));
         Ok(body)
