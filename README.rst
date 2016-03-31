@@ -54,15 +54,16 @@ See main.rs for examples of usage::
     let conf = config::read_config();
     let client = PTClient::from(conf);
 
-    let response = client.get_pdns("passivetotal.org");
+    // Returns a Result<PDNSResponse, ResponseError>
+    let response = client.get_pdns("passivetotal.org").unwrap();
     for result in response.results.unwrap() {
         println!("{}", result.resolve.unwrap());
     }
 
-    let response = client.get_whois("passivetotal.org");
+    let response = client.get_whois("passivetotal.org").unwrap();
     println!("email: {}", response.contactEmail.unwrap());
 
-    let response = client.get_sslcert("52.8.228.23");
+    let response = client.get_sslcert("52.8.228.23").unwrap();
     for result in response.results.unwrap() {
         println!("SHA1: {}", result.sha1.unwrap());
     }

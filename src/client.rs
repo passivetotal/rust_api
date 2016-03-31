@@ -68,7 +68,10 @@ macro_rules! define_get_decoder_no_args {
 ///
 /// let conf = try!(read_config());
 /// let client = PTClient::new(conf);
-/// let response = client.get_pdns("passivetotal.org");
+/// let response = match client.get_pdns("passivetotal.org") {
+///     Ok(response) => response,
+///     _ => panic!("Something bad happened in the JSON response"),
+/// };
 /// ```
 ///
 /// See main.rs for full usage examples.

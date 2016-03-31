@@ -18,7 +18,10 @@
 //!
 //! let conf = try!(read_config());
 //! let client = PTClient::new(conf);
-//! let response = client.get_pdns("passivetotal.org");
+//! let response = match client.get_pdns("passivetotal.org") {
+//!     Ok(response) => response,
+//!     _ => panic!("Something bad happened in the JSON response"),
+//! };
 //! ```
 //!
 //! [1]: https://api.passivetotal.org/api/docs/
