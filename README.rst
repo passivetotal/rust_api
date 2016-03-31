@@ -3,6 +3,9 @@ rust-passivetotal
 
 Rust API and command-line app for Rust
 
+Check the `full documentation <https://passivetotal.github.io/rust_api/doc/passivetotal/>`_.
+
+
 Installation
 ------------
 
@@ -31,10 +34,6 @@ Create a JSON config in ~/.config/passivetotal/api_config.json with the followin
 
 Usage
 -----
-
-Simply run the command line project with::
-
-    $ ./target/debug/passivetotal (pdns|whois|ssl) <query>
 
 Use --help/-h to view info on the arguments::
 
