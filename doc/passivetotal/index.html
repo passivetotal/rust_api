@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `passivetotal` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, passivetotal">
+
+    <title>passivetotal - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    <link rel="shortcut icon" href="https://passivetotal.org/static/img/favicon/png">
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <a href='../passivetotal/index.html'><img src='https://s3-us-west-1.amazonaws.com/passivetotal-website/public/core-pt-logo-sm.png' alt='' width='100'></a>
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'passivetotal', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>passivetotal</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-0' class='srclink' href='../src/passivetotal/lib.rs.html#1-48' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>This is the Rust implementation of a client for the PassiveTotal API.
+Usage is provided through <code>passivetotal::client::PTClient</code></p>
+
+<p>Before running anything, you will need to create a JSON configuration. See the <a href="./config/index.html">config
+module</a>
+documentations for details.</p>
+
+<p>Please see the <a href="./client/struct.PTClient.html"><code>passivetotal::client::PTClient</code></a> documentation for the available methods.</p>
+
+<p>See the <a href="./response/index.html">response module documentation</a> for the specification for the response structs.</p>
+
+<p>See the <a href="https://api.passivetotal.org/api/docs/">API documentation</a> for more resources.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>passivetotal</span>::<span class='ident'>config</span>::<span class='ident'>read_config</span>;
+<span class='kw'>use</span> <span class='ident'>passivetotal</span>::<span class='ident'>client</span>::<span class='ident'>PTClient</span>;
+
+<span class='kw'>let</span> <span class='ident'>conf</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>read_config</span>() {
+    <span class='prelude-val'>Ok</span>(<span class='ident'>conf</span>) <span class='op'>=&gt;</span> <span class='ident'>conf</span>,
+    _ <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Please create your config at ~/.config/api_config.json&quot;</span>),
+}
+<span class='kw'>let</span> <span class='ident'>client</span> <span class='op'>=</span> <span class='ident'>PTClient</span>::<span class='ident'>new</span>(<span class='ident'>conf</span>);
+<span class='kw'>let</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>client</span>.<span class='ident'>get_pdns</span>(<span class='string'>&quot;passivetotal.org&quot;</span>) {
+    <span class='prelude-val'>Ok</span>(<span class='ident'>response</span>) <span class='op'>=&gt;</span> <span class='ident'>response</span>,
+    _ <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Something bad happened in the JSON response&quot;</span>),
+};</pre>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='mod' href='client/index.html'
+                               title='passivetotal::client'>client</a></td>
+                        <td class='docblock short'>
+                             <p>The client module exposes the <code>PTClient</code> struct which is the main interface to use, and
+contains all methods necessary to make calls to the API.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='mod' href='config/index.html'
+                               title='passivetotal::config'>config</a></td>
+                        <td class='docblock short'>
+                             <p>It is necessary to create the correct configuration before using the API.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='mod' href='constants/index.html'
+                               title='passivetotal::constants'>constants</a></td>
+                        <td class='docblock short'>
+                             <p>Warning: incomplete</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='mod' href='response/index.html'
+                               title='passivetotal::response'>response</a></td>
+                        <td class='docblock short'>
+                             <p>The response module contains all the structs that will be returned as a response for all API
+calls.</p>
+
+                        </td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "passivetotal";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

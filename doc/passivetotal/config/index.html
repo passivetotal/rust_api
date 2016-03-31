@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `config` mod in crate `passivetotal`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, config">
+
+    <title>passivetotal::config - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    <link rel="shortcut icon" href="https://passivetotal.org/static/img/favicon/png">
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <a href='../../passivetotal/index.html'><img src='https://s3-us-west-1.amazonaws.com/passivetotal-website/public/core-pt-logo-sm.png' alt='' width='100'></a>
+        <p class='location'><a href='../index.html'>passivetotal</a></p><script>window.sidebarCurrent = {name: 'config', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>passivetotal</a>::<wbr><a class='mod' href=''>config</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-226' class='srclink' href='../../src/passivetotal/config.rs.html#1-63' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>It is necessary to create the correct configuration before using the API.</p>
+
+<p>You must put a JSON document at ~/.config/passivetotal/api_config.json, that looks like:</p>
+
+<pre><code class="language-json">{
+    &quot;username&quot;: &quot;your_email@example.com&quot;,
+    &quot;api_key&quot;: &quot;The API key associated with your account&quot;,
+    &quot;http_proxy&quot;: &quot;&lt;unused, keep empty&gt;&quot;,
+    &quot;https_proxy&quot;: &quot;&lt;unused, keep empty&gt;&quot;,
+    &quot;api_server&quot;: &quot;api.passivetotal.org&quot;,
+}
+</code></pre>
+
+<p>The config generator isn&#39;t implemented in this rust implementation yet so it is necessary to
+create it by hand or generate it with the <a href="https://pypi.python.org/pypi/passivetotal">Python API</a>, installable via:
+<code>pip install passivetotal</code></p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>passivetotal</span>::<span class='ident'>config</span>::<span class='ident'>read_config</span>;
+<span class='kw'>use</span> <span class='ident'>passivetotal</span>::<span class='ident'>client</span>::<span class='ident'>PTClient</span>;
+
+<span class='kw'>let</span> <span class='ident'>conf</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>read_config</span>());
+<span class='kw'>let</span> <span class='ident'>client</span> <span class='op'>=</span> <span class='ident'>PTClient</span>::<span class='ident'>new</span>(<span class='ident'>conf</span>);</pre>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Config.html'
+                               title='passivetotal::config::Config'>Config</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.ConfigError.html'
+                               title='passivetotal::config::ConfigError'>ConfigError</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.read_config.html'
+                               title='passivetotal::config::read_config'>read_config</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "passivetotal";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
