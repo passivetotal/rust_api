@@ -201,3 +201,13 @@ pub struct ActionEverCompromisedResponse {
 pub struct ActionDDNSResponse {
     pub dynamicDns: Option<bool>,
 }
+
+#[derive(RustcDecodable, Debug)]
+pub struct ActionMonitorResponse {
+    pub monitor: Option<bool>,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct ActionSinkholeResponse {
+    pub sinkhole: Option<bool>,
+}

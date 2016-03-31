@@ -22,6 +22,8 @@ Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal classification <query>
        passivetotal evercomp <query>
        passivetotal ddns <query>
+       passivetotal monitor <query>
+       passivetotal sinkhole <query>
        passivetotal account
        passivetotal --help
        
@@ -46,6 +48,8 @@ struct Args {
     cmd_classification: bool,
     cmd_evercomp: bool,
     cmd_ddns: bool,
+    cmd_monitor: bool,
+    cmd_sinkhole: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -152,5 +156,11 @@ fn main() {
     } else if args.cmd_ddns {
         let response = client.get_ddns(args.arg_query.as_str());
         println!("{}", response.dynamicDns.unwrap());
+    } else if args.cmd_monitor {
+        let response = client.get_monitor(args.arg_query.as_str());
+        println!("{}", response.monitor.unwrap());
+    } else if args.cmd_sinkhole {
+        let response = client.get_sinkhole(args.arg_query.as_str());
+        println!("{}", response.sinkhole.unwrap());
     }
 }

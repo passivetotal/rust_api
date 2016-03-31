@@ -87,6 +87,8 @@ impl PTClient {
     define_get_decoder!(get_classification, "/actions/classification", ActionClassificationResponse);
     define_get_decoder!(get_ever_compromised, "/actions/ever-compromised", ActionEverCompromisedResponse);
     define_get_decoder!(get_ddns, "/actions/dynamic-dns", ActionDDNSResponse);
+    define_get_decoder!(get_monitor, "/actions/monitor", ActionMonitorResponse);
+    define_get_decoder!(get_sinkhole, "/actions/sinkhole", ActionSinkholeResponse);
     
     // This doesn't take a query, just information about your account.
     define_get_decoder_no_args!(get_account, "/account", AccountResponse);
