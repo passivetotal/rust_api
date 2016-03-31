@@ -196,3 +196,8 @@ pub struct ActionClassificationResponse {
 pub struct ActionEverCompromisedResponse {
     pub everCompromised: Option<bool>,
 }
+
+#[derive(RustcDecodable, Debug)]
+pub struct ActionDDNSResponse {
+    pub dynamicDns: Option<bool>,
+}

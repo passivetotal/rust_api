@@ -21,6 +21,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal hosttracker <query>
        passivetotal classification <query>
        passivetotal evercomp <query>
+       passivetotal ddns <query>
        passivetotal account
        passivetotal --help
        
@@ -44,6 +45,7 @@ struct Args {
     cmd_hosttracker: bool,
     cmd_classification: bool,
     cmd_evercomp: bool,
+    cmd_ddns: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -147,5 +149,8 @@ fn main() {
     } else if args.cmd_evercomp {
         let response = client.get_ever_compromised(args.arg_query.as_str());
         println!("{}", response.everCompromised.unwrap());
+    } else if args.cmd_ddns {
+        let response = client.get_ddns(args.arg_query.as_str());
+        println!("{}", response.dynamicDns.unwrap());
     }
 }
