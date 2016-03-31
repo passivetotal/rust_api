@@ -5,6 +5,7 @@
 //!
 //! [1]: ./struct.PTClient.html
 
+use std::io::Error as IoError;
 use std::io::Read;
 use hyper::{Client, Url};
 use hyper::header::{Authorization, Basic};
@@ -25,9 +26,11 @@ pub struct PTClient {
 #[derive(Debug)]
 pub enum ResponseError {
     Json(json::DecoderError),
+    Http(IoError),
 }
 
 map_to_error!(ResponseError, json::DecoderError, ResponseError::Json);
+map_to_error!(ResponseError, IoError, ResponseError::Http);
 
 /// This macro allows me to define functions that perform a GET on the endpoint specified, and
 /// return an instance of the type passed into the macro.
@@ -38,7 +41,7 @@ macro_rules! define_get_decoder {
         pub fn $name(&self, query: &str) -> Result<$elem_ty, ResponseError> {
             let mut url = self.make_url($path);
             url.set_query_from_pairs(&[("query", query)]);
-            let body = self.get_response_body(&url);
+            let body = try!(self.get_response_body(&url));
             Ok(try!(json::decode(body.as_str())))
         }
     }
@@ -49,7 +52,7 @@ macro_rules! define_get_decoder_no_args {
     ($name: ident, $path: expr, $elem_ty: ty) => {
         pub fn $name(&self) -> Result<$elem_ty, ResponseError> {
             let url = self.make_url($path);
-            let body = self.get_response_body(&url);
+            let body = try!(self.get_response_body(&url));
             Ok(try!(json::decode(body.as_str())))
         }
     }
@@ -95,12 +98,12 @@ impl PTClient {
         }
     }
 
-    fn get_response_body(&self, url: &Url) -> String {
+    fn get_response_body(&self, url: &Url) -> Result<String, ResponseError> {
         // Takes a hyper::Url and returns the text body
         let mut res = self.client.get(url.serialize().as_str()).header(Authorization(self.auth.clone())).send().unwrap();
         let mut body = String::new();
-        res.read_to_string(&mut body).unwrap();
-        body
+        try!(res.read_to_string(&mut body));
+        Ok(body)
     }
 
     fn make_url(&self, path: &str) -> hyper::Url {
