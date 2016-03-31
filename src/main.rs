@@ -10,6 +10,7 @@ use passivetotal::client::PTClient;
 
 static USAGE: &'static str = "
 Usage: passivetotal pdns <query> [--source=<source>]
+       passivetotal pdnsuniq <query>
        passivetotal whois <query>
        passivetotal ssl <query>
        passivetotal osint <query>
@@ -28,6 +29,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
 #[derive(Debug, RustcDecodable)]
 struct Args {
     cmd_pdns: bool,
+    cmd_pdnsuniq: bool,
     cmd_whois: bool,
     cmd_ssl: bool,
     cmd_osint: bool,
@@ -54,6 +56,21 @@ fn main() {
             if args.flag_source == "none" || result.source.unwrap().contains(&args.flag_source) {
                 println!("{}: {}", result.lastSeen.unwrap(), result.resolve.unwrap());
             }
+        }
+        match response.pager {
+            Some(pager) => {
+                println!("previous/next/page_size: {}/{}/{}", pager.previous.unwrap(), pager.next.unwrap(), pager.page_size.unwrap());
+            },
+            _ => { println!("End of Results"); },
+        };
+    } else if args.cmd_pdnsuniq {
+        let response = client.get_pdns_unique(args.arg_query.as_str());
+        println!("UniquePDNS results for {}:", args.arg_query);
+        for (res, ct) in response.frequency.unwrap() {
+            println!("{}: {}", res, ct);
+        }
+        for uniq in response.results.unwrap() {
+            println!("{}", uniq);
         }
         match response.pager {
             Some(pager) => {

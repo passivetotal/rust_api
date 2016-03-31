@@ -143,3 +143,12 @@ pub struct HostAttributeTrackerResult {
     pub attributeType: Option<String>,
 }
 
+#[derive(RustcDecodable, Debug)]
+pub struct PDNSUniqueResponse {
+    pub frequency: Option<Vec<(String, i32)>>,
+    pub queryType: Option<String>,
+    pub total: Option<i32>,
+    pub pager: Option<Pager>,
+    pub queryValue: Option<String>,
+    pub results: Option<Vec<String>>,
+}
