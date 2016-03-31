@@ -98,3 +98,9 @@ pub struct MalwareResults {
     pub sourceUrl: Option<String>,
     pub collectionDate: Option<String>,
 }
+
+#[derive(RustcDecodable, Debug)]
+pub struct SubdomainsResponse {
+    pub queryValue: Option<String>,
+    pub subdomains: Option<Vec<String>>,
+}

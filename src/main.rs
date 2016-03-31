@@ -14,6 +14,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal ssl <query>
        passivetotal osint <query>
        passivetotal malware <query>
+       passivetotal subdomains <query>
        passivetotal --help
        
        Options:
@@ -28,6 +29,7 @@ struct Args {
     cmd_ssl: bool,
     cmd_osint: bool,
     cmd_malware: bool,
+    cmd_subdomains: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -86,6 +88,11 @@ fn main() {
         for result in response.results.unwrap() {
             println!("Source URL: {}", result.sourceUrl.unwrap());
             println!("Sample:     {}", result.sample.unwrap());
+        }
+    } else if args.cmd_subdomains {
+        let response = client.get_subdomains(args.arg_query.as_str());
+        for sub in response.subdomains.unwrap() {
+            println!("{}", sub);
         }
     }
 }
