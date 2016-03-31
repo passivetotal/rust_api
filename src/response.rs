@@ -128,3 +128,18 @@ pub struct HostAttributeComponentResult {
     pub firstSeen: Option<String>,
     pub label: Option<String>,
 }
+
+#[derive(RustcDecodable, Debug)]
+pub struct HostAttributeTrackerResponse {
+    pub results: Option<Vec<HostAttributeTrackerResult>>,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct HostAttributeTrackerResult {
+    pub attributeValue: Option<String>,
+    pub hostname: Option<String>,
+    pub lastSeen: Option<String>,
+    pub firstSeen: Option<String>,
+    pub attributeType: Option<String>,
+}
+
