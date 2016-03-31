@@ -186,3 +186,8 @@ pub struct PDNSUniqueResponse {
     pub queryValue: Option<String>,
     pub results: Option<Vec<String>>,
 }
+
+#[derive(RustcDecodable, Debug)]
+pub struct ActionClassificationResponse {
+    pub classification: Option<String>,
+}

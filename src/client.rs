@@ -84,6 +84,7 @@ impl PTClient {
     define_get_decoder!(get_subdomains, "/enrichment/subdomains", SubdomainsResponse);
     define_get_decoder!(get_host_attribute_components, "/host-attributes/components", HostAttributeComponentResponse);
     define_get_decoder!(get_host_attribute_trackers, "/host-attributes/trackers", HostAttributeTrackerResponse);
+    define_get_decoder!(get_classification, "/actions/classification", ActionClassificationResponse);
     
     // This doesn't take a query, just information about your account.
     define_get_decoder_no_args!(get_account, "/account", AccountResponse);

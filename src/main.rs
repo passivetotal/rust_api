@@ -19,6 +19,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal subdomains <query>
        passivetotal hostattr <query>
        passivetotal hosttracker <query>
+       passivetotal classification <query>
        passivetotal account
        passivetotal --help
        
@@ -40,6 +41,7 @@ struct Args {
     cmd_account: bool,
     cmd_hostattr: bool,
     cmd_hosttracker: bool,
+    cmd_classification: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -137,5 +139,8 @@ fn main() {
         for result in response.results.unwrap() {
             println!("Hostname: {}  {}: {}", result.hostname.unwrap(), result.attributeType.unwrap(), result.attributeValue.unwrap());
         }
+    } else if args.cmd_classification {
+        let response = client.get_classification(args.arg_query.as_str());
+        println!("{}", response.classification.unwrap());
     }
 }
