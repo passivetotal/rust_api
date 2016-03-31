@@ -75,9 +75,11 @@ macro_rules! define_get_decoder_no_args {
 /// ```
 ///
 /// See main.rs for full usage examples.
+/// See the [response module][2] documentation for details on the sorts of responses returned.
 /// See the [API documentation][1] for more resources.
 ///
 /// [1]: https://api.passivetotal.org/api/docs/ for details on the API services
+/// [2]: ../response/index.html
 impl PTClient {
 
     /// Creates a PTClient from a JSON Config from ~/.config/passivetotal/api_config.json

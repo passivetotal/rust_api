@@ -9,6 +9,8 @@
 //!
 //! Please see the [`passivetotal::client::PTClient` documentation][2] for the available methods.
 //!
+//! See the [response module documentation] for the specification for the response structs.
+//!
 //! See the [API documentation][1] for more resources.
 //!
 //! # Examples
@@ -26,6 +28,7 @@
 //!
 //! [1]: https://api.passivetotal.org/api/docs/
 //! [2]: ./client/struct.PTClient.html
+//! [3]: ./response/index.html
 
 extern crate rustc_serialize;
 extern crate hyper;
