@@ -67,4 +67,5 @@ impl PTClient {
     define_get_decoder!(get_pdns, "/dns/passive", PDNSResponse);
     define_get_decoder!(get_whois, "/whois", WhoisResponse);
     define_get_decoder!(get_sslcert, "/ssl-certificate/history", SSLCertResponse);
+    define_get_decoder!(get_osint, "/enrichment/osint", OSINTResponse);
 }

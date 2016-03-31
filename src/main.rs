@@ -12,6 +12,7 @@ static USAGE: &'static str = "
 Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal whois <query>
        passivetotal ssl <query>
+       passivetotal osint <query>
        passivetotal --help
        
        Options:
@@ -24,6 +25,7 @@ struct Args {
     cmd_pdns: bool,
     cmd_whois: bool,
     cmd_ssl: bool,
+    cmd_osint: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -66,6 +68,15 @@ fn main() {
             println!("First Seen: {}", result.firstSeen.unwrap());
             for ip in result.ipAddresses.unwrap() {
                 println!("  IPv4: {}", ip);
+            }
+        }
+    } else if args.cmd_osint {
+        let response = client.get_osint(args.arg_query.as_str());
+        println!("OSINT resources:");
+        for result in response.results.unwrap() {
+            println!("Source URL: {}", result.sourceUrl.unwrap());
+            for reported in result.inReport.unwrap() {
+                println!("  - {}", reported);
             }
         }
     }

@@ -73,3 +73,15 @@ pub struct SSLCertResults {
     pub lastSeen: Option<String>,
 }
 
+#[derive(RustcDecodable, Debug)]
+pub struct OSINTResponse {
+    pub results: Option<Vec<OSINTResults>>,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct OSINTResults {
+    pub source: Option<String>,
+    pub sourceUrl: Option<String>,
+    pub inReport: Option<Vec<String>>,
+    pub tags: Option<Vec<String>>,
+}
