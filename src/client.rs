@@ -1,7 +1,7 @@
 //! The client module exposes the `PTClient` struct which is the main interface to use, and
 //! contains all methods necessary to make calls to the API.
 //!
-//! Please see the [`passivetotal::client::PTClient` documentation][1]
+//! Please see the [`passivetotal::client::PTClient`][1] documentation
 //!
 //! [1]: ./struct.PTClient.html
 
