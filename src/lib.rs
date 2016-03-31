@@ -9,7 +9,7 @@
 //!
 //! Please see the [`passivetotal::client::PTClient` documentation][2] for the available methods.
 //!
-//! See the [response module documentation] for the specification for the response structs.
+//! See the [response module documentation][3] for the specification for the response structs.
 //!
 //! See the [API documentation][1] for more resources.
 //!
