@@ -80,7 +80,9 @@ impl PTClient {
     define_get_decoder!(get_osint, "/enrichment/osint", OSINTResponse);
     define_get_decoder!(get_malware, "/enrichment/malware", MalwareResponse);
     define_get_decoder!(get_subdomains, "/enrichment/subdomains", SubdomainsResponse);
-    define_get_decoder_no_args!(get_account, "/account", AccountResponse);
     define_get_decoder!(get_host_attribute_components, "/host-attributes/components", HostAttributeComponentResponse);
     define_get_decoder!(get_host_attribute_trackers, "/host-attributes/trackers", HostAttributeTrackerResponse);
+    
+    // This doesn't take a query, just information about your account.
+    define_get_decoder_no_args!(get_account, "/account", AccountResponse);
 }
