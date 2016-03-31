@@ -51,7 +51,7 @@ See main.rs for examples of usage::
     use passivetotal::PTClient;
 
     // automatically parses config at ~/.config/passivetotal/api_config.json
-    let conf = config::read_config();
+    let conf = config::read_config().unwrap();
     let client = PTClient::from(conf);
 
     // Returns a Result<PDNSResponse, ResponseError>

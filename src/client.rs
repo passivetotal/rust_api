@@ -66,7 +66,10 @@ macro_rules! define_get_decoder_no_args {
 /// use passivetotal::config::read_config;
 /// use passivetotal::client::PTClient;
 ///
-/// let conf = try!(read_config());
+/// let conf = match read_config() {
+///     Ok(conf) => conf,
+///     _ => panic!("Please create your config at ~/.config/api_config.json"),
+/// }
 /// let client = PTClient::new(conf);
 /// let response = match client.get_pdns("passivetotal.org") {
 ///     Ok(response) => response,
