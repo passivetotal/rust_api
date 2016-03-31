@@ -62,11 +62,11 @@ pub struct Registrant {
 
 #[derive(RustcDecodable, Debug)]
 pub struct SSLCertResponse {
-    pub results: Option<Vec<SSLCertResults>>,
+    pub results: Option<Vec<SSLCertResult>>,
 }
 
 #[derive(RustcDecodable, Debug)]
-pub struct SSLCertResults {
+pub struct SSLCertResult {
     pub sha1: Option<String>,
     pub ipAddresses: Option<Vec<String>>,
     pub firstSeen: Option<String>,
@@ -75,11 +75,11 @@ pub struct SSLCertResults {
 
 #[derive(RustcDecodable, Debug)]
 pub struct OSINTResponse {
-    pub results: Option<Vec<OSINTResults>>,
+    pub results: Option<Vec<OSINTResult>>,
 }
 
 #[derive(RustcDecodable, Debug)]
-pub struct OSINTResults {
+pub struct OSINTResult {
     pub source: Option<String>,
     pub sourceUrl: Option<String>,
     pub inReport: Option<Vec<String>>,
@@ -88,11 +88,11 @@ pub struct OSINTResults {
 
 #[derive(RustcDecodable, Debug)]
 pub struct MalwareResponse {
-    pub results: Option<Vec<MalwareResults>>,
+    pub results: Option<Vec<MalwareResult>>,
 }
 
 #[derive(RustcDecodable, Debug)]
-pub struct MalwareResults {
+pub struct MalwareResult {
     pub sample: Option<String>,
     pub source: Option<String>,
     pub sourceUrl: Option<String>,
@@ -115,3 +115,16 @@ pub struct AccountResponse {
     pub organization: Option<String>,
 }
 
+#[derive(RustcDecodable, Debug)]
+pub struct HostAttributeComponentResponse {
+    pub results: Option<Vec<HostAttributeComponentResult>>,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct HostAttributeComponentResult {
+    pub category: Option<String>,
+    pub hostname: Option<String>,
+    pub lastSeen: Option<String>,
+    pub firstSeen: Option<String>,
+    pub label: Option<String>,
+}
