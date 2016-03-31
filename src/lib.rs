@@ -7,11 +7,15 @@
 //! This is the Rust implementation of a client for the PassiveTotal API.
 //! Usage is provided through `passivetotal::client::PTClient`
 //!
-//! Please see the [`passivetotal::client::PTClient`][1] documentation for the available methods.
+//! Before running anything, you will need to create a JSON configuration. See the [config
+//! module][1]
+//! documentations for details.
 //!
-//! See the [response module documentation][2] for the specification for the response structs.
+//! Please see the [`passivetotal::client::PTClient`][2] documentation for the available methods.
 //!
-//! See the [API documentation][3] for more resources.
+//! See the [response module documentation][3] for the specification for the response structs.
+//!
+//! See the [API documentation][4] for more resources.
 //!
 //! # Examples
 //! ```
@@ -26,9 +30,10 @@
 //! };
 //! ```
 //!
-//! [1]: ./client/struct.PTClient.html
-//! [2]: ./response/index.html
-//! [3]: https://api.passivetotal.org/api/docs/
+//! [1]: ./config/index.html
+//! [2]: ./client/struct.PTClient.html
+//! [3]: ./response/index.html
+//! [4]: https://api.passivetotal.org/api/docs/
 
 extern crate rustc_serialize;
 extern crate hyper;

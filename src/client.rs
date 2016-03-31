@@ -78,7 +78,7 @@ macro_rules! define_get_decoder_no_args {
 /// See the [response module][2] documentation for details on the sorts of responses returned.
 /// See the [API documentation][1] for more resources.
 ///
-/// [1]: https://api.passivetotal.org/api/docs/ for details on the API services
+/// [1]: https://api.passivetotal.org/api/docs/
 /// [2]: ../response/index.html
 impl PTClient {
 
