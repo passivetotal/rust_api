@@ -85,3 +85,16 @@ pub struct OSINTResults {
     pub inReport: Option<Vec<String>>,
     pub tags: Option<Vec<String>>,
 }
+
+#[derive(RustcDecodable, Debug)]
+pub struct MalwareResponse {
+    pub results: Option<Vec<MalwareResults>>,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct MalwareResults {
+    pub sample: Option<String>,
+    pub source: Option<String>,
+    pub sourceUrl: Option<String>,
+    pub collectionDate: Option<String>,
+}

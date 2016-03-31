@@ -13,6 +13,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal whois <query>
        passivetotal ssl <query>
        passivetotal osint <query>
+       passivetotal malware <query>
        passivetotal --help
        
        Options:
@@ -26,6 +27,7 @@ struct Args {
     cmd_whois: bool,
     cmd_ssl: bool,
     cmd_osint: bool,
+    cmd_malware: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -78,6 +80,12 @@ fn main() {
             for reported in result.inReport.unwrap() {
                 println!("  - {}", reported);
             }
+        }
+    } else if args.cmd_malware {
+        let response = client.get_malware(args.arg_query.as_str());
+        for result in response.results.unwrap() {
+            println!("Source URL: {}", result.sourceUrl.unwrap());
+            println!("Sample:     {}", result.sample.unwrap());
         }
     }
 }
