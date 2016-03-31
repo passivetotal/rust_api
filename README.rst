@@ -16,7 +16,7 @@ From the project root directory::
 Or link to the project in your Cargo.toml::
 
     [dependencies]
-    passivetotal = { git = "https://bitbucket.org/riskiq/rust-passivetotal.git" }
+    passivetotal = { git = "https://github.com/passivetotal/rust_api.git" }
 
 Configuration
 -------------
