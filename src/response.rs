@@ -191,3 +191,8 @@ pub struct PDNSUniqueResponse {
 pub struct ActionClassificationResponse {
     pub classification: Option<String>,
 }
+
+#[derive(RustcDecodable, Debug)]
+pub struct ActionEverCompromisedResponse {
+    pub everCompromised: Option<bool>,
+}
