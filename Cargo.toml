@@ -7,3 +7,11 @@ authors = ["Johan Nestaas <johannestaas@gmail.com>"]
 hyper = { git = "https://github.com/hyperium/hyper.git" }
 rustc-serialize="*"
 docopt="*"
+
+[lib]
+name = "passivetotal"
+path = "src/lib.rs"
+
+[[bin]]
+name = "rust-passivetotal"
+path = "src/main.rs"
