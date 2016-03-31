@@ -1,5 +1,12 @@
-pub use std::io::Read;
-pub use hyper::{Client, Url};
+//! The client module exposes the `PTClient` struct which is the main interface to use, and
+//! contains all methods necessary to make calls to the API.
+//!
+//! Please see the [`passivetotal::client::PTClient` documentation][1]
+//!
+//! [1]: ./struct.PTClient.html
+
+use std::io::Read;
+use hyper::{Client, Url};
 use hyper::header::{Authorization, Basic};
 use rustc_serialize::json;
 use response::*;
@@ -30,6 +37,7 @@ macro_rules! define_get_decoder {
     }
 }
 
+/// This is used to create a GET function without arguments (just one endpoint /account)
 macro_rules! define_get_decoder_no_args {
     ($name: ident, $path: expr, $elem_ty: ty) => {
         pub fn $name(&self) -> $elem_ty {
@@ -57,6 +65,9 @@ macro_rules! define_get_decoder_no_args {
 /// ```
 ///
 /// See main.rs for full usage examples.
+/// See the [API documentation][1] for more resources.
+///
+/// [1]: https://api.passivetotal.org/api/docs/ for details on the API services
 impl PTClient {
 
     /// Creates a PTClient from a JSON Config from ~/.config/passivetotal/api_config.json

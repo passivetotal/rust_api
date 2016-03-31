@@ -1,3 +1,7 @@
+//! Warning: incomplete
+//! This is a draft of the constants that you can match against with certain values given inside
+//! responses.
+
 pub enum Source {
     RISKIQ,
     PINGLY,

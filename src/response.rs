@@ -1,3 +1,13 @@
+//! The response module contains all the structs that will be returned as a response for all API
+//! calls.
+//!
+//! These were created programmatically through a tool json2rust, which takes a JSON document and
+//! builds the corresponding Rust struct. This simplified the process greatly, since a lot of these
+//! documents are extensive.
+//!
+//! This is the heart of the client, and maps all responses to the sort of data they contain.
+//! The fields are in camelCase to correspond with the fields returned via the API.
+
 extern crate rustc_serialize;
 
 #[derive(RustcDecodable, Debug)]
