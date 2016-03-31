@@ -7,18 +7,18 @@ use hyper;
 
 use config;
 
-// This is the client exposed to the user for abstracting the passivetotal API
+/// This is the client exposed to the user for abstracting the passivetotal API.
 pub struct PTClient {
-    // the hyper::Client
+    /// the hyper::Client
     pub client: Client,
-    // stores the http basic auth credentials
+    /// stores the http basic auth credentials
     pub auth: Basic,
 }
 
-// This macro allows me to define functions that perform a GET on the endpoint specified, and
-// return an instance of the type passed into the macro.
-// json::decode doesn't like decoding with a function response of a generic type, so a macro seemed
-// like the best option to abstract this.
+/// This macro allows me to define functions that perform a GET on the endpoint specified, and
+/// return an instance of the type passed into the macro.
+/// json::decode doesn't like decoding with a function response of a generic type, so a macro seemed
+/// like the best option to abstract this.
 macro_rules! define_get_decoder {
     ($name: ident, $path: expr, $elem_ty: ty) => {
         pub fn $name(&self, query: &str) -> $elem_ty {
@@ -40,10 +40,27 @@ macro_rules! define_get_decoder_no_args {
     }
 }
 
+/// The `PTClient` is the main interface into making calls to the PassiveTotal API.
+/// You instanciate a `PTClient` with the `new` method which takes a `config::Config` as its
+/// argument.
+///
+/// All the GET functions are defined by the macro `define_get_decoder!`
+///
+/// # Examples
+/// ```
+/// use passivetotal::config::read_config;
+/// use passivetotal::client::PTClient;
+///
+/// let conf = try!(read_config());
+/// let client = PTClient::new(conf);
+/// let response = client.get_pdns("passivetotal.org");
+/// ```
+///
+/// See main.rs for full usage examples.
 impl PTClient {
 
+    /// Creates a PTClient from a JSON Config from ~/.config/passivetotal/api_config.json
     pub fn new(conf: config::Config) -> PTClient {
-        // Creates a PTClient from a JSON Config from ~/.config/passivetotal/api_config.json
         let username = conf.username;
         let password = Some(conf.api_key);
         PTClient {
@@ -69,11 +86,11 @@ impl PTClient {
         }
     }
 
-    // These macros define functions named get_pdns, get_whois, get_sslcert which will return an
-    // instance of the response type.
-    // I used a macro because generics don't seem to work with json::decode with a generic return
-    // type.
-    // The definition will be: pub fn get_pdns(&self, query: &str) -> PDNSResponse
+    /// These macros define functions named get_pdns, get_whois, get_sslcert which will return an
+    /// instance of the response type.
+    /// I used a macro because generics don't seem to work with json::decode with a generic return
+    /// type.
+    /// The definition will be: pub fn get_pdns(&self, query: &str) -> PDNSResponse
     define_get_decoder!(get_pdns, "/dns/passive", PDNSResponse);
     define_get_decoder!(get_pdns_unique, "/dns/passive/unique", PDNSUniqueResponse);
     define_get_decoder!(get_whois, "/whois", WhoisResponse);
@@ -91,6 +108,6 @@ impl PTClient {
     define_get_decoder!(get_sinkhole, "/actions/sinkhole", ActionSinkholeResponse);
     define_get_decoder!(get_tags, "/actions/tags", ActionTagResponse);
     
-    // This doesn't take a query, just information about your account.
+    /// This doesn't take a query, just responds with information about your account.
     define_get_decoder_no_args!(get_account, "/account", AccountResponse);
 }
