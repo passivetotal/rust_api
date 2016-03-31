@@ -22,17 +22,24 @@ pub struct PTClient {
     pub auth: Basic,
 }
 
+#[derive(Debug)]
+pub enum ResponseError {
+    Json(json::DecoderError),
+}
+
+map_to_error!(ResponseError, json::DecoderError, ResponseError::Json);
+
 /// This macro allows me to define functions that perform a GET on the endpoint specified, and
 /// return an instance of the type passed into the macro.
 /// json::decode doesn't like decoding with a function response of a generic type, so a macro seemed
 /// like the best option to abstract this.
 macro_rules! define_get_decoder {
     ($name: ident, $path: expr, $elem_ty: ty) => {
-        pub fn $name(&self, query: &str) -> $elem_ty {
+        pub fn $name(&self, query: &str) -> Result<$elem_ty, ResponseError> {
             let mut url = self.make_url($path);
             url.set_query_from_pairs(&[("query", query)]);
             let body = self.get_response_body(&url);
-            json::decode(body.as_str()).unwrap()
+            Ok(try!(json::decode(body.as_str())))
         }
     }
 }
@@ -40,10 +47,10 @@ macro_rules! define_get_decoder {
 /// This is used to create a GET function without arguments (just one endpoint /account)
 macro_rules! define_get_decoder_no_args {
     ($name: ident, $path: expr, $elem_ty: ty) => {
-        pub fn $name(&self) -> $elem_ty {
+        pub fn $name(&self) -> Result<$elem_ty, ResponseError> {
             let url = self.make_url($path);
             let body = self.get_response_body(&url);
-            json::decode(body.as_str()).unwrap()
+            Ok(try!(json::decode(body.as_str())))
         }
     }
 }
