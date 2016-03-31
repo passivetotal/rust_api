@@ -6,7 +6,7 @@ extern crate rustc_serialize;
 extern crate hyper;
 
 mod macros;
+pub mod client;
 pub mod constants;
 pub mod config;
 pub mod response;
-pub mod client;
