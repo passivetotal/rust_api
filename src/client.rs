@@ -30,6 +30,16 @@ macro_rules! define_get_decoder {
     }
 }
 
+macro_rules! define_get_decoder_no_args {
+    ($name: ident, $path: expr, $elem_ty: ty) => {
+        pub fn $name(&self) -> $elem_ty {
+            let url = self.make_url($path);
+            let body = self.get_response_body(&url);
+            json::decode(body.as_str()).unwrap()
+        }
+    }
+}
+
 impl PTClient {
 
     pub fn new(conf: config::Config) -> PTClient {
@@ -70,4 +80,5 @@ impl PTClient {
     define_get_decoder!(get_osint, "/enrichment/osint", OSINTResponse);
     define_get_decoder!(get_malware, "/enrichment/malware", MalwareResponse);
     define_get_decoder!(get_subdomains, "/enrichment/subdomains", SubdomainsResponse);
+    define_get_decoder_no_args!(get_account, "/account", AccountResponse);
 }

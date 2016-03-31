@@ -104,3 +104,14 @@ pub struct SubdomainsResponse {
     pub queryValue: Option<String>,
     pub subdomains: Option<Vec<String>>,
 }
+
+#[derive(RustcDecodable, Debug)]
+pub struct AccountResponse {
+    pub username: Option<String>,
+    pub firstActive: Option<String>,
+    pub firstName: Option<String>,
+    pub lastName: Option<String>,
+    pub lastActive: Option<String>,
+    pub organization: Option<String>,
+}
+

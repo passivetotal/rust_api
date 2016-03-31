@@ -15,6 +15,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal osint <query>
        passivetotal malware <query>
        passivetotal subdomains <query>
+       passivetotal account
        passivetotal --help
        
        Options:
@@ -30,6 +31,7 @@ struct Args {
     cmd_osint: bool,
     cmd_malware: bool,
     cmd_subdomains: bool,
+    cmd_account: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -94,5 +96,10 @@ fn main() {
         for sub in response.subdomains.unwrap() {
             println!("{}", sub);
         }
+    } else if args.cmd_account {
+        let response = client.get_account();
+        println!("Username: {}", response.username.unwrap());
+        println!("Name: {} {}", response.firstName.unwrap(), response.lastName.unwrap());
+        println!("Org: {}", response.organization.unwrap());
     }
 }
