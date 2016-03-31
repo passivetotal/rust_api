@@ -22,7 +22,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
        
        Options:
             -h, --help          Show this error message
-            --source=<source>   Source to filter [default:none]
+            --source=<source>   For pdns command, the source to filter [default:none]
 ";
 
 #[derive(Debug, RustcDecodable)]
