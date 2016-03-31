@@ -13,6 +13,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal pdnsuniq <query>
        passivetotal whois <query>
        passivetotal ssl <query>
+       passivetotal sslhistory <query>
        passivetotal osint <query>
        passivetotal malware <query>
        passivetotal subdomains <query>
@@ -32,6 +33,7 @@ struct Args {
     cmd_pdnsuniq: bool,
     cmd_whois: bool,
     cmd_ssl: bool,
+    cmd_sslhistory: bool,
     cmd_osint: bool,
     cmd_malware: bool,
     cmd_subdomains: bool,
@@ -89,6 +91,9 @@ fn main() {
         }
     } else if args.cmd_ssl {
         let response = client.get_sslcert(args.arg_query.as_str());
+        println!("{:?}", response);
+    } else if args.cmd_sslhistory {
+        let response = client.get_sslcert_history(args.arg_query.as_str());
         println!("SSL Certificate history for {}:", args.arg_query);
         for result in response.results.unwrap() {
             println!("SHA1: {}", result.sha1.unwrap());

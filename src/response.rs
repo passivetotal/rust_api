@@ -62,11 +62,45 @@ pub struct Registrant {
 
 #[derive(RustcDecodable, Debug)]
 pub struct SSLCertResponse {
-    pub results: Option<Vec<SSLCertResult>>,
+    pub issuerStreetAddress: Option<String>,
+    pub subjectSerialNumber: Option<String>,
+    pub subjectEmailAddress: Option<String>,
+    pub expirationDate: Option<String>,
+    pub issuerSerialNumber: Option<String>,
+    pub issuerOrganizationName: Option<String>,
+    pub subjectCommonName: Option<String>,
+    pub subjectSurname: Option<String>,
+    pub subjectCountry: Option<String>,
+    pub subjectGivenName: Option<String>,
+    pub issuerProvince: Option<String>,
+    pub subjectLocalityName: Option<String>,
+    pub issuerStateOrProvinceName: Option<String>,
+    pub issuerCommonName: Option<String>,
+    pub issueDate: Option<String>,
+    pub issuerEmailAddress: Option<String>,
+    pub subjectOrganizationUnitName: Option<String>,
+    pub subjectOrganizationName: Option<String>,
+    pub fingerprint: Option<String>,
+    pub issuerLocalityName: Option<String>,
+    pub issuerGivenName: Option<String>,
+    pub issuerCountry: Option<String>,
+    pub subjectStateOrProvinceName: Option<String>,
+    pub sha1: Option<String>,
+    pub sslVersion: Option<String>,
+    pub issuerSurname: Option<String>,
+    pub serialNumber: Option<String>,
+    pub subjectStreetAddress: Option<String>,
+    pub issuerOrganizationUnitName: Option<String>,
+    pub subjectProvince: Option<String>,
 }
 
 #[derive(RustcDecodable, Debug)]
-pub struct SSLCertResult {
+pub struct SSLCertHistoryResponse {
+    pub results: Option<Vec<SSLCertHistoryResult>>,
+}
+
+#[derive(RustcDecodable, Debug)]
+pub struct SSLCertHistoryResult {
     pub sha1: Option<String>,
     pub ipAddresses: Option<Vec<String>>,
     pub firstSeen: Option<String>,
