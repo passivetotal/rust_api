@@ -24,6 +24,7 @@ Usage: passivetotal pdns <query> [--source=<source>]
        passivetotal ddns <query>
        passivetotal monitor <query>
        passivetotal sinkhole <query>
+       passivetotal tag <query>
        passivetotal account
        passivetotal --help
        
@@ -50,6 +51,7 @@ struct Args {
     cmd_ddns: bool,
     cmd_monitor: bool,
     cmd_sinkhole: bool,
+    cmd_tag: bool,
     arg_query: String,
     flag_source: String,
 }
@@ -162,5 +164,10 @@ fn main() {
     } else if args.cmd_sinkhole {
         let response = client.get_sinkhole(args.arg_query.as_str());
         println!("{}", response.sinkhole.unwrap());
+    } else if args.cmd_tag {
+        let response = client.get_tags(args.arg_query.as_str());
+        for tag in response.tags.unwrap() {
+            println!("{}", tag);
+        }
     }
 }

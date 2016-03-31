@@ -211,3 +211,8 @@ pub struct ActionMonitorResponse {
 pub struct ActionSinkholeResponse {
     pub sinkhole: Option<bool>,
 }
+
+#[derive(RustcDecodable, Debug)]
+pub struct ActionTagResponse {
+    pub tags: Option<Vec<String>>,
+}
